@@ -1,0 +1,33 @@
+#include<iostream>
+using namespace std;
+
+class Point2D {
+    double x, y;
+    public:
+        Point2D(double a, double b) : x(a), y(b) {}
+        Point2D(): x(0), y(0) {}
+        double getX() {return x;}
+        double getY() {return y;}
+
+    Point2D operator++(int) { //postfisso - parametro dummy "int" per distinguere dal caso prefisso
+        Point2D aux = *this; //crea una copia
+        x++; //incrementa se stesso (non la copia)
+        y++;
+        return aux; //passa la copia non aggiornata
+    }
+    friend ostream& operator<<(ostream&, Point2D);
+};
+
+ostream& operator<<(ostream &s, Point2D p) {
+    // inserisco una rapresentazione di p nel riferimento a ostream
+    s << "(" << p.x << "," << p.y << ")";
+    return s; //restituisco il riferimento
+}
+
+
+int main() {
+    Point2D* p1 = new Point2D(2,3);
+    cout << p1++ << endl;
+    cout << p1 << endl;
+}
+
